@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxy</title>
+</head>
+<body>
+
+<h2>Input:</h2>
+<textarea id="question" rows="4" cols="50"></textarea>
+<br>
+<button onclick="submitQuestion()">Submit</button>
+<h2>Answer:</h2>
+<div id="answer"></div>
+
+<script>
+    function submitQuestion() {
+        let questionText = document.getElementById('question').value;
+
+        fetch('/ask', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ question: questionText })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('answer').textContent = data.answer;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+</body>
+</html>
