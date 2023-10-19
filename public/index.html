@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proxy</title>
+    <style>
+        * {
+            font-family: 'Arial', sans-serif; /* Setting the font to Arial, with a fallback to any sans-serif font available */
+            font-size: 30px; /* Setting the base font size to 16 pixels */
+        }
+    </style>
+    <title>Playground</title>
 </head>
 <body>
 
 <h2>Input:</h2>
-<textarea id="question" rows="4" cols="50"></textarea>
+<input type="password" id="key" rows="1" cols="80"></textarea>
+<br>
+<textarea id="question" rows="4" cols="80"></textarea>
 <br>
 <button onclick="submitQuestion()">Submit</button>
 <h2>Answer:</h2>
@@ -17,13 +25,13 @@
 <script>
     function submitQuestion() {
         let questionText = document.getElementById('question').value;
-
+        let keyText = document.getElementById('key').value;
         fetch('/ask', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ question: questionText })
+            body: JSON.stringify({key:keyText, question: questionText })
         })
         .then(response => response.json())
         .then(data => {

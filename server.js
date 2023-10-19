@@ -6,7 +6,6 @@ const app = express();
 
 const PORT = 3000;
 const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
-const OPENAI_API_KEY = "xxx";
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
@@ -14,6 +13,7 @@ app.use(express.static('public'));
 app.post('/ask', async (req, res) => {
     try {
         const question = req.body.question;
+        const key = req.body.key.slice(0, -1);
         const body = {
             model: "gpt-4",
             messages: [{ role: "user", content: question }]
@@ -21,7 +21,7 @@ app.post('/ask', async (req, res) => {
         console.log(body)
         const headers = {
             headers: {
-                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                'Authorization': `Bearer ${key}`,
                 'Content-Type': 'application/json'
             }
         }
