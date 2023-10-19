@@ -15,6 +15,7 @@ COPY . .
 
 # If you only want to copy the public folder, use this line instead of the above "COPY . .":
 # COPY ./public ./public
+EXPOSE 80
 
 # Specify the command to run when the container starts
 CMD [ "node", "server.js" ]
