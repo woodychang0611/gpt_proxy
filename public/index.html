@@ -9,6 +9,7 @@
             font-size: 30px; /* Setting the base font size to 16 pixels */
         }
     </style>
+     <script src="https://cdn.rawgit.com/showdownjs/showdown/1.9.0/dist/showdown.min.js"></script>
     <title>Playground</title>
 </head>
 <body>
@@ -35,7 +36,9 @@
         })
         .then(response => response.json())
         .then(data => {
-            document.getElementById('answer').textContent = data.answer;
+            const converter = new showdown.Converter();
+            const htmlOutput = converter.makeHtml(data.answer);
+            document.getElementById('answer').innerHTML  = htmlOutput;
         })
         .catch(error => {
             console.error('Error:', error);
