@@ -1,4 +1,5 @@
 
+#Update git commit in commit_id.json to show on the webpage
 $commit_id = git rev-parse HEAD
 Write-Host "Commit Id: $commit_id"
 $json_location = Join-Path $PSScriptRoot "commit_id.json"
