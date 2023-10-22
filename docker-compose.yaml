@@ -4,8 +4,7 @@ services:
   node-app:
     build: .
     ports:
-      - "3000:80"
-    volumes:
-      - .:/app
+      - "80:80"
+
     working_dir: /app
     command: npm start
