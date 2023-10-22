@@ -12,21 +12,18 @@
 </head>
 
 <body>
-    <div class="container-sm mt-5">
+    <div class="container-sm col-md-6 mx-auto mt-5">
         <input type="password" id="key" rows="1" cols="80" width="100"></textarea>
         <br>
         <textarea id="question" rows="4" cols="80"></textarea>
         <br>
         <button id="submit" type="button" class="btn btn-primary active" onclick="submitQuestion()">Submit</button>
-
-        <h2>Answer:</h2>
         <div id="answer"></div>
     </div>
     <script>
         function submitQuestion() {
             let questionText = document.getElementById('question').value;
             let keyText = document.getElementById('key').value;
-            document.getElementById("submit").disabled = true;
             document.getElementById('answer').innerHTML = '<img src="loading.svg"/>'
             fetch('/ask', {
                 method: 'POST',
@@ -47,9 +44,7 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                }).finally(() => { document.getElementById("submit").disabled = false }
-                )
-            document.getElementById("submit").disabled = false
+                })
         }
     </script>
 
