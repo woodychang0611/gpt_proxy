@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs')
 const bodyParser = require('body-parser');
 const axios = require('axios');
 
@@ -9,6 +10,20 @@ const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+app.get('/commit_id', async (req, res) => {
+    console.log("commit_id")
+    try {
+        let filePath = "commit_id.json"
+        console.log(filePath)
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        let json = JSON.parse(fileContent)
+        res.send(json);
+    } catch (error) {
+        console.log(error)
+        res.send({"commit_id": "unknown"})
+    }
+});
 
 app.post('/ask', async (req, res) => {
     try {

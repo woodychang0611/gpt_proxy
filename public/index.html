@@ -19,6 +19,11 @@
         <br>
         <button id="submit" type="button" class="btn btn-primary active" onclick="submitQuestion()">Submit</button>
         <div id="answer"></div>
+        <div class="position-relative" style="height: 200px;">
+            <div  id="commit_id" class="position-absolute bottom-0 start-0">
+                Content goes here
+            </div>
+        </div>
     </div>
     <script>
         function submitQuestion() {
@@ -46,6 +51,21 @@
                     console.error('Error:', error);
                 })
         }
+    </script>
+    <script>
+        fetch('/commit_id', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(data => {
+                let commit_id = data.commit_id;
+                document.getElementById('commit_id').innerHTML = data.commit_id;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
     </script>
 
 </body>
