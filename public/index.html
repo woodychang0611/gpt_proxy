@@ -12,13 +12,13 @@
 </head>
 
 <body>
-    <div class="container">
-        <h2>Input:</h2>
+    <div class="container-sm mt-5">
         <input type="password" id="key" rows="1" cols="80" width="100"></textarea>
         <br>
         <textarea id="question" rows="4" cols="80"></textarea>
         <br>
-        <button type="button" class="btn btn-primary active" onclick="submitQuestion()">Submit</button>
+        <button id="submit" type="button" class="btn btn-primary active" onclick="submitQuestion()">Submit</button>
+
         <h2>Answer:</h2>
         <div id="answer"></div>
     </div>
@@ -26,7 +26,8 @@
         function submitQuestion() {
             let questionText = document.getElementById('question').value;
             let keyText = document.getElementById('key').value;
-            document.getElementById('answer').innerHTML = "loading";
+            document.getElementById("submit").disabled = true;
+            document.getElementById('answer').innerHTML = '<img src="loading.svg"/>'
             fetch('/ask', {
                 method: 'POST',
                 headers: {
@@ -37,12 +38,18 @@
                 .then(response => response.json())
                 .then(data => {
                     const converter = new showdown.Converter();
-                    const htmlOutput = converter.makeHtml(data.answer);
+                    let htmlOutput = converter.makeHtml(data.answer);
+                    if (htmlOutput == undefined) {
+                        htmlOutput = '<p class="text-danger">Failed</p>'
+                    }
+
                     document.getElementById('answer').innerHTML = htmlOutput;
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                });
+                }).finally(() => { document.getElementById("submit").disabled = false }
+                )
+            document.getElementById("submit").disabled = false
         }
     </script>
 
