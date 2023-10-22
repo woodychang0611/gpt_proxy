@@ -1,0 +1,12 @@
+body {
+    font-family: 'Arial', sans-serif; /* Setting the font to Arial, with a fallback to any sans-serif font available */
+    font-size: 30px; /* Setting the base font size to 16 pixels */
+}
+
+#key {
+    width: 50%;
+}
+
+#question{
+    width: 50%
+}
