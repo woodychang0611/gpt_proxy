@@ -11,9 +11,10 @@ body {
     width: 100%
 }
 
-.bottom-right {
+#commit_id {
     position: fixed;
     bottom: 0;
     right: 0;
     padding: 10px; /* Optional: for some spacing from the edge */
+    font-size: 15px;
 }
