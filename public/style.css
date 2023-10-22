@@ -10,3 +10,10 @@ body {
 #question{
     width: 100%
 }
+
+.bottom-right {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px; /* Optional: for some spacing from the edge */
+}
