@@ -9,7 +9,7 @@ const PORT = 80;
 const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static('build'));
 
 app.get('/commit_id', async (req, res) => {
     console.log("commit_id")
@@ -42,6 +42,7 @@ app.post('/ask', async (req, res) => {
         }
         console.log(headers)
         const response = await axios.post(OPENAI_URL, body, headers);
+        console.log(response)
         answer = response.data.choices[0].message.content
         res.json({ answer });
     } catch (error) {
