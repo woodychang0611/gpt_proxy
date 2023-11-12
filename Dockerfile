@@ -13,6 +13,8 @@ RUN npm install
 # Copy the rest of the application's files into the container
 COPY . .
 
+RUN npm run build
+
 # If you only want to copy the public folder, use this line instead of the above "COPY . .":
 # COPY ./public ./public
 EXPOSE 80
