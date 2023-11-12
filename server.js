@@ -12,10 +12,9 @@ app.use(bodyParser.json());
 app.use(express.static('build'));
 
 app.get('/commit_id', async (req, res) => {
-    console.log("commit_id")
+    console.log("GET commit_id")
     try {
         let filePath = "commit_id.json"
-        console.log(filePath)
         const fileContent = fs.readFileSync(filePath, 'utf8');
         let json = JSON.parse(fileContent)
         res.send(json);
