@@ -1,14 +1,23 @@
 //index.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Button, Grid, TextField, Container, Paper, Typography } from '@mui/material';
+import {Box, Button, Grid, TextField, Container, Paper, Typography } from '@mui/material';
 import Showdown from 'showdown';
-import submitQuestion from "./tool.js"
+import { submitQuestion, getCommitId } from "./tool.js"
 
 function Index() {
   const [inputValue, setInputValue] = useState('');
   const [htmlText, setHtmlText] = useState('');
   const [apiKey, setApiKey] = useState('');
+  const [commitId, setCommitId] = useState('');
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleApiKeyChange = (event) => {
+    setApiKey(event.target.value);
+  };
 
   const sendMessage = () => {
     submitQuestion(apiKey, inputValue).then
@@ -19,14 +28,14 @@ function Index() {
       }
       )
   }
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleApiKeyChange = (event) => {
-    setApiKey(event.target.value);
-  };
+  useEffect(() => {
+    getCommitId().then(
+      (id) => {
+        setCommitId(id)
+      }
+    )
+  }
+  )
 
   return (
     <Container maxWidth="xl" sx={{ mt: 10 }}>
@@ -41,7 +50,7 @@ function Index() {
             onChange={handleInputChange}
             fullWidth multiline rows={4} variant="outlined" />
           <Paper fullWidth elevation={3} >
-            <Typography 
+            <Typography
               component="div"
               dangerouslySetInnerHTML={{ __html: htmlText }}
             />
@@ -49,6 +58,9 @@ function Index() {
           <Button type="submit" onClick={sendMessage}>Submit</Button>
         </Grid>
       </Grid>
+      <Box sx={{position:'fixed',bottom:0,right:0,m:2,p:1}}>
+        {commitId}
+      </Box>
     </Container>
   );
 }
