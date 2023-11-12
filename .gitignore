@@ -1,5 +1,8 @@
 #VSCode
-.vscode
+.vscode/
+#build
+
+build/
 
 #Key
 key.txt
