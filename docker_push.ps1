@@ -2,7 +2,7 @@
 #Update git commit in commit_id.json to show on the webpage
 $commit_id = git rev-parse HEAD
 Write-Host "Commit Id: $commit_id"
-$json_location = Join-Path $PSScriptRoot "commit_id.json"
+$json_location = Join-Path $PSScriptRoot "backend/commit_id.json"
 $content = "{""commit_id"":""$commit_id""}"
 Write-Host "Save to $json_location "
 Set-Content -Path $json_location  -Value $content -Encoding Ascii #Use Ascii to save without BOM

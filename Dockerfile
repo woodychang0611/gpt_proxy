@@ -1,22 +1,22 @@
-FROM node:21 as dev
+ FROM node:21 as dev
 # Build args
 RUN mkdir /tmp/react
-COPY package.json /tmp/react/
+COPY frontend/package.json /tmp/react/
 RUN cd /tmp/react && npm install
-COPY ./src /tmp/react/src/
-COPY ./public /tmp/react/public/
-COPY ./webpack.config.js /tmp/react/
+COPY frontend/src /tmp/react/src/
+COPY frontend/public /tmp/react/public/
+COPY frontend/webpack.config.js /tmp/react/
 RUN cd /tmp/react && npm run build
 
 # Use an official Node.js runtime as the base image
 FROM node:21 as prod
 # Set the working directory in the container to /app
 WORKDIR /app
-COPY package.json .
+COPY backend/package.json .
 RUN npm install
 #Copy files needed
-COPY server.js .
-COPY commit_id.json .
+COPY backend/server.js .
+COPY backend/commit_id.json .
 
 # Copy build result from dev to prod
 RUN mkdir build
