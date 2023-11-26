@@ -2,9 +2,10 @@ version: '3'
 
 services:
   node-app:
-    build: .
+    build: 
+      context: .
+      target: prod
     ports:
       - "80:80"
-
     working_dir: /app
-    command: npm start
+    command: node server.js
