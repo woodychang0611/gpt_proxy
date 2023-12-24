@@ -1,7 +1,7 @@
 //index.js
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import {Box, Button, Grid, TextField, Container, Paper, Typography } from '@mui/material';
+import { Box, Button, Grid, TextField, Container, Paper, Typography } from '@mui/material';
 import Showdown from 'showdown';
 import { submitQuestion, getCommitId } from "./tool.js"
 
@@ -9,7 +9,8 @@ function Index() {
   const [inputValue, setInputValue] = useState('');
   const [htmlText, setHtmlText] = useState('');
   const [apiKey, setApiKey] = useState('');
-  const [commitId, setCommitId] = useState('');
+  const [commitId, setCommitId] = useState('unknown commit');
+  const [isBusy,setIsBusy] = useState(false)
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -20,11 +21,13 @@ function Index() {
   };
 
   const sendMessage = () => {
+    setIsBusy(true)
     submitQuestion(apiKey, inputValue).then
       ((answer) => {
         const converter = new Showdown.Converter();
         const htmlText = converter.makeHtml(answer);
         setHtmlText(htmlText)
+        setIsBusy(false)
       }
       )
   }
@@ -40,10 +43,13 @@ function Index() {
   return (
     <Container maxWidth="xl" sx={{ mt: 10 }}>
       <Grid container spacing={2}>
-        <Grid item xs={3} >
+        <Grid item xs={3}>
           <TextField fullWidth label="Key" value={apiKey}
             onChange={handleApiKeyChange}
             type="password" id="gpt_key"></TextField>
+          <Box sx={{ position: 'fixed', bottom: 0, left: 0, m: 2, p: 1 }}>
+            {commitId}
+          </Box>
         </Grid>
         <Grid item xs={9} >
           <TextField value={inputValue}
@@ -55,12 +61,11 @@ function Index() {
               dangerouslySetInnerHTML={{ __html: htmlText }}
             />
           </Paper>
-          <Button type="submit" onClick={sendMessage}>Submit</Button>
+           <Button type="submit" onClick={sendMessage} disabled={isBusy}>
+              {isBusy ? 'Submitting...' : 'Submit'}
+            </Button>      
         </Grid>
       </Grid>
-      <Box sx={{position:'fixed',bottom:0,right:0,m:2,p:1}}>
-        {commitId}
-      </Box>
     </Container>
   );
 }
