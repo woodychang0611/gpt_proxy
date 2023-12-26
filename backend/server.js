@@ -46,7 +46,9 @@ app.post('/ask', async (req, res) => {
         res.json({ answer });
     } catch (error) {
         console.log(error)
-        res.status(500).json({ error: "Failed to fetch response" });
+        var status = error.response.status
+        var text = error.response.statusText
+        res.status(status).json({ error: "Failed to fetch response",text:text });
     }
 });
 
