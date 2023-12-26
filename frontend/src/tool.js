@@ -8,7 +8,7 @@ function getCommitId(id) {
         }).then(response => response.json())
             .then(data => resolve(data.commit_id))
             .catch(error => {
-                console.error('Error:', error);
+                reject(error)
             })
     }
     )
@@ -23,10 +23,19 @@ function submitQuestion(keyText, questionText) {
             },
             body: JSON.stringify({ key: keyText, question: questionText })
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }else{
+                    console.log(response)                    
+                    console.log(response.statusText)
+                    reject(response)
+                }
+            })
             .then(data => resolve(data.answer))
             .catch(error => {
                 console.error('Error:', error);
+                reject(error)
             })
     }
     )

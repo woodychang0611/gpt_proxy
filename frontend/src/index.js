@@ -31,6 +31,10 @@ function Index() {
         setHtmlText(htmlText)
         setIsBusy(false)
       }
+      ).catch((error)=>{
+        setHtmlText(`${error.status} ${error.statusText}`)
+        setIsBusy(false)
+      }
       )
   }
   useEffect(() => {
@@ -38,7 +42,9 @@ function Index() {
       (id) => {
         setCommitId(id)
       }
-    )
+    ).catch((error)=>{
+      setCommitId('Get commit id failed')
+    })
   }
   )
 
@@ -69,7 +75,7 @@ function Index() {
             <Button type="submit" onClick={sendMessage} disabled={isBusy}>
               {isBusy ? 'Submitting...' : 'Submit'}
             </Button>
-            <Paper fullWidth elevation={3} >
+            <Paper elevation={3} >
               <Typography
                 component="div"
                 dangerouslySetInnerHTML={{ __html: htmlText }}
