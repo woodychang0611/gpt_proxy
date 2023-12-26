@@ -66,15 +66,15 @@ function Index() {
             <TextField value={inputValue}
               onChange={handleInputChange}
               fullWidth multiline rows={4} variant="outlined" />
+            <Button type="submit" onClick={sendMessage} disabled={isBusy}>
+              {isBusy ? 'Submitting...' : 'Submit'}
+            </Button>
             <Paper fullWidth elevation={3} >
               <Typography
                 component="div"
                 dangerouslySetInnerHTML={{ __html: htmlText }}
               />
             </Paper>
-            <Button type="submit" onClick={sendMessage} disabled={isBusy}>
-              {isBusy ? 'Submitting...' : 'Submit'}
-            </Button>
           </Grid>
         </Grid>
       </Container>
