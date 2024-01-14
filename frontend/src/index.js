@@ -31,7 +31,7 @@ function Index() {
         setHtmlText(htmlText)
         setIsBusy(false)
       }
-      ).catch((error)=>{
+      ).catch((error) => {
         setHtmlText(`${error.status} ${error.statusText}`)
         setIsBusy(false)
       }
@@ -42,7 +42,7 @@ function Index() {
       (id) => {
         setCommitId(id)
       }
-    ).catch((error)=>{
+    ).catch((error) => {
       setCommitId('Get commit id failed')
     })
   }
@@ -64,7 +64,7 @@ function Index() {
             <TextField fullWidth label="Key" value={apiKey}
               onChange={handleApiKeyChange}
               type="password" id="gpt_key"></TextField>
-            <Box  sx={{ position: 'fixed', bottom: 0, left: 0, m: 2, p: 1, fontSize: '0.75rem' }}>
+            <Box sx={{ position: 'fixed', bottom: 0, left: 0, m: 2, p: 1, fontSize: '0.75rem' }}>
               {commitId}
             </Box>
           </Grid>
