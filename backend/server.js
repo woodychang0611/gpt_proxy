@@ -46,9 +46,9 @@ function shutDown() {
 
 app.use(bodyParser.json());
 if (argv.apiOnly){
-    console.log("API only, do not host serve static files")
+    console.log("API only, do not host static files")
 }else{
-    console.log("Host serve static files")    
+    console.log("Host static files")    
     app.use(express.static('build'));
 }
 
