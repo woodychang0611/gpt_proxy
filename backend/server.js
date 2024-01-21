@@ -4,9 +4,27 @@ const process = require('process')
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const app = express();
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
 
 const PORT = 80;
 const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
+
+
+const argv = yargs(hideBin(process.argv))
+    .option('server-only', {
+        alias: 's',
+        type: 'boolean',
+        description: 'Run the server only without additional processes',
+        default: false
+    })
+    .option('host-location', {
+        alias: 'w',
+        type: 'string',
+        description: 'Web locations to host',
+        default:'build',
+    })
+    .argv;
 
 //make Docker "gracefully exit" a node container  
 process.on('SIGTERM', shutDown);
@@ -27,7 +45,9 @@ function shutDown() {
 
 
 app.use(bodyParser.json());
-app.use(express.static('build'));
+if (!argv.serverOnly){
+    app.use(express.static('build'));
+}
 
 app.get('/commit_id', async (req, res) => {
     console.log("GET commit_id")
