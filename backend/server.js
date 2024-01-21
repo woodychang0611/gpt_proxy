@@ -12,10 +12,10 @@ const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
 
 
 const argv = yargs(hideBin(process.argv))
-    .option('server-only', {
+    .option('api-only', {
         alias: 's',
         type: 'boolean',
-        description: 'Run the server only without additional processes',
+        description: 'Run the API only without hosting host serve static files',
         default: false
     })
     .option('host-location', {
@@ -45,7 +45,10 @@ function shutDown() {
 
 
 app.use(bodyParser.json());
-if (!argv.serverOnly){
+if (argv.apiOnly){
+    console.log("API only, do not host serve static files")
+}else{
+    console.log("Host serve static files")    
     app.use(express.static('build'));
 }
 
