@@ -9,3 +9,7 @@ services:
       - "80:80"
     working_dir: /app
     command: node server.js
+    develop:
+      watch:
+        - action: rebuild
+          path: ./frontend
