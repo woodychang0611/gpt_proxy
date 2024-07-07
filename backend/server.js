@@ -70,7 +70,7 @@ app.post('/ask', async (req, res) => {
         const question = req.body.question;
         const key = req.body.key.slice(0, -1);
         const body = {
-            model: "gpt-4",
+            model: "gpt-4o",
             messages: [{ role: "user", content: question }]
         }
         console.log(body)
