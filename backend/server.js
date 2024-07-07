@@ -9,7 +9,7 @@ const { hideBin } = require('yargs/helpers');
 
 const PORT = 80;
 const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
-
+const MODEL = "gpt-4o"
 
 const argv = yargs(hideBin(process.argv))
     .option('api-only', {
@@ -65,12 +65,18 @@ app.get('/commit_id', async (req, res) => {
     }
 });
 
+app.get('/model', async (req, res) => {
+    console.log("GET Model")
+    res.send({ "model": MODEL })
+});
+
+
 app.post('/ask', async (req, res) => {
     try {
         const question = req.body.question;
         const key = req.body.key.slice(0, -1);
         const body = {
-            model: "gpt-4o",
+            model: MODEL,
             messages: [{ role: "user", content: question }]
         }
         console.log(body)
